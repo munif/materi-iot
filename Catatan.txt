@@ -6,3 +6,4 @@ Contoh Access Token:
 GvlrxHWpL0SYfDtmtgkU
 
 Contoh POST API:
+curl -v -X POST -d "{\"temperature\": 25}" http://demo.thingsboard.io/api/v1/GvlrxHWpL0SYfDtmtgkU/telemetry --header "Content-Type:application/json"

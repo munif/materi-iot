@@ -20,44 +20,38 @@ void setup() {
 }
 
 void loop() {
-   if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
- 
-      HTTPClient http;   
-      
-      // Format: http://demo.thingsboard.io/api/v1/$ACCESSTOKEN/telemetry
-      // Ganti $ACCESSTOKEN dengan token device yang ingin dikirimi telemetry
-      http.begin("http://demo.thingsboard.io/api/v1/GvlrxHWpL0SYfDtmtgkU/telemetry");  //Specify destination for HTTP request
-      http.addHeader("Content-Type", "application/json");             //Specify content-type header
+  if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
+    HTTPClient http;
+    http.begin("http://demo.thingsboard.io/api/v1/GvlrxHWpL0SYfDtmtgkU/telemetry");
+    
+    http.addHeader("Content-Type", "application/json");
 
-      // Generate random temperature
-      long randNumber = random(10);
-      double randTemp = randNumber * 0.5 + 25.0;
-      Serial.println("Random temperature: " + String(randTemp));
+    Serial.println("Sending requests");
 
-      // Send POST data
-      int httpResponseCode = http.POST("{\"temperature\": " + String(randTemp) + "}");   //Send the actual POST request
- 
-      if(httpResponseCode>0){
-          String response = http.getString();                       //Get the response to the request
-          Serial.println(httpResponseCode);   //Print return code
-          Serial.println(response);           //Print request answer
-      }
-      else
-      {
-          Serial.print("Error on sending POST: ");
-          Serial.println(httpResponseCode);
-      }
- 
-      http.end();  //Free resources
- 
+    // Generate random temperature
+    long randNumber = random(10);
+    double randTemp = randNumber * 0.5 + 25.0;
+    Serial.println("Random temperature: " + String(randTemp));
+
+    // Send POST data
+    int httpResponseCode = http.POST("{\"temperature\": " + String(randTemp) + "}");   //Send the actual POST request
+    
+    if(httpResponseCode > 0) {
+      String response = http.getString();
+      Serial.println(httpResponseCode);
+      Serial.println(response);
+    } else {
+      Serial.print("Error on sending POST: ");
+      Serial.print(httpResponseCode);
+    }
+    
+    http.end();
   }
   else
   {
- 
       Serial.println("Error in WiFi connection");   
- 
   }
  
-  delay(10000);  //Send a request every 10 seconds
+  delay(3000);  //Send a request every 10 seconds
 
 }
