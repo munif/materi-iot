@@ -4,6 +4,8 @@ import json
 import time
 from datetime import datetime
 
+from random import random
+
 ACCESS_TOKEN = 'kuPyFpHiiMXOecZOuTwX'
 broker = "18.221.254.87"
 port = 1883
@@ -18,9 +20,12 @@ client1.username_pw_set(ACCESS_TOKEN)
 client1.connect(broker, port, keepalive=60)
 
 while True:
+    rand_humidity = random() * 10 + 60
+    rand_temperature = random() * 5 + 25
+
     payload = "{"
-    payload += "\"Humidity\": 60,"
-    payload += "\"Temperature\": 25"
+    payload += "\"Humidity\": " + str(rand_humidity) +","
+    payload += "\"Temperature\": " + str(rand_temperature)
     payload += "}"
 
     ret = client1.publish("v1/devices/me/telemetry", payload)
