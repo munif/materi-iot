@@ -22,6 +22,8 @@ void setup() {
 void loop() {
   if(WiFi.status()== WL_CONNECTED){   //Check WiFi connection status
     HTTPClient http;
+
+    // Ganti IP sesuai dengan IP server AWS
     http.begin("http://18.221.254.87:8080/api/v1/kuPyFpHiiMXOecZOuTwX/telemetry");
     
     http.addHeader("Content-Type", "application/json");
